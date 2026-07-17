@@ -1,0 +1,60 @@
+dataset:
+  avgc_dir: "<PATH_TO_AVGC>"
+
+output:
+  dir: ./outputs/avgc_lstm_post
+
+signal:
+  low_hz: 1.0
+  high_hz: 9.0
+  target_fs: 128
+  rereference: common_average
+  filter_order: 4
+
+tracker:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  feature_dim: 64
+  eeg_hidden_dim: 64
+  env_hidden_dim: 32
+  temperature: 1.0
+  eeg_temporal_kernel: 65
+  env_conv1_kernel: 49
+  env_conv2_kernel: 65
+  dropout: 0.2
+
+lstm:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  units_lstm: 32
+  filters_cnn_eeg: 32
+  filters_cnn_env: 32
+  units_hidden: 32
+  kerSize_temporal: 65
+  kerSize_ver_eeg: 7
+  stride_temporal: 2
+  stride_ch: 2
+  dropout: 0.1
+
+
+window:
+  window_s: 1.0
+  stride_s: 1.0
+
+train:
+  epochs: 50
+  lr: 3.0e-3
+  weight_decay: 1.0e-4
+  lambda_crf: 0.0
+  lambda_ce: 1.0
+  grad_clip: 1.0
+  batch_size: 0
+  scheduler: cosine
+  warmup_crf_epoch: 10
+
+experiment:
+  use_lstm: true
+  p_switch_init: 0.001
+  learn_p_switch: false
+  device: cuda:0
+  seed: 42

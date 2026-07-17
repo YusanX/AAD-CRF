@@ -1,0 +1,94 @@
+model: icassp2023
+
+dataset:
+  ustc_dir: "<PATH_TO_USTC>"
+
+output:
+  dir: ./outputs/ustc_icassp2023
+
+signal:
+  low_hz: 1.0
+  high_hz: 9.0
+  target_fs: 128
+  rereference: common_average
+  filter_order: 4
+
+tracker:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  feature_dim: 32
+  eeg_hidden_dim: 64
+  env_hidden_dim: 32
+  temperature: 1.0
+  eeg_temporal_kernel: 65
+  env_conv1_kernel: 15
+  env_conv2_kernel: 65
+  dropout: 0.2
+  use_multiscale: false
+  eeg_ms_kernels: []
+  env_ms_kernels: []
+
+dilation:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  layers: 3
+  kernel_size: 3
+  spatial_filters: 8
+  dilation_filters: 32
+  dropout: 0.1
+  use_bilinear_head: true
+
+mha_dc:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  layers: 3
+  kernel_size: 3
+  dilation_filters: 32
+  mha_num_heads: 2
+  mha_ff_dim: 32
+  attn_dropout: 0.0
+  ffn_dropout: 0.0
+  dropout: 0.1
+  use_bilinear_head: true
+
+mha_gru_dc:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  layers: 3
+  kernel_size: 3
+  dilation_filters: 32
+  mha_num_heads: 2
+  mha_ff_dim: 64
+  gru_hidden: 64
+  bidirectional: true
+  gru_ln: true
+  attn_dropout: 0.0
+  ffn_dropout: 0.0
+  dropout: 0.0
+  use_bilinear_head: true
+
+window:
+  window_s: 1.0
+  stride_s: 1.0
+
+train:
+  epochs: 50
+  lr: 2.0e-4
+  weight_decay: 1.0e-4
+  lambda_crf: 1.0
+  lambda_ce: 0.5
+  grad_clip: 1.0
+  batch_size: 0
+  scheduler: cosine
+  warmup_crf_epoch: 10
+
+experiment:
+  icassp2023_variant: mha_gru_dc
+  p_switch_init: 0.001
+  learn_p_switch: true
+  device: auto
+  seed: 42
+  subject: null
+  trial: null
+  max_trials_per_subject: null
+  max_subjects: null

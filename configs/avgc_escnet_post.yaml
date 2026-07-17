@@ -1,0 +1,44 @@
+dataset:
+  avgc_dir: "<PATH_TO_AVGC>"
+
+output:
+  dir: ./outputs/avgc_escnet_post
+
+signal:
+  low_hz: 1.0
+  high_hz: 9.0
+  target_fs: 128
+  rereference: common_average
+  filter_order: 4
+
+tracker:
+  n_eeg_channels: 64
+  n_time_steps: 128
+  feature_dim: 32
+  eeg_hidden_dim: 64
+  env_hidden_dim: 32
+  temperature: 1.0
+  eeg_temporal_kernel: 65
+  env_conv1_kernel: 35
+  env_conv2_kernel: 65
+
+window:
+  window_s: 1.0
+  stride_s: 1.0
+
+train:
+  epochs: 50
+  lr: 3.0e-3
+  weight_decay: 1.0e-4
+  lambda_crf: 0.0
+  lambda_ce: 1.0
+  grad_clip: 1.0
+  batch_size: 0
+  scheduler: cosine
+  warmup_crf_epoch: 50
+
+experiment:
+  p_switch_init: 0.00076
+  learn_p_switch: false
+  device: cuda:0
+  seed: 42

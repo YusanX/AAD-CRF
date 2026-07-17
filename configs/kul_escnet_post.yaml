@@ -1,0 +1,54 @@
+model: escnet
+
+dataset:
+  kul_dir: "<PATH_TO_KUL>"
+
+output:
+  dir: ./outputs/kul_escnet_post
+
+signal:
+  low_hz: 1.0
+  high_hz: 9.0
+  target_fs: 128
+  rereference: common_average
+  filter_order: 4
+
+tracker:
+  n_eeg_channels: 64
+  n_time_steps: 64
+  feature_dim: 32
+  eeg_hidden_dim: 64
+  env_hidden_dim: 32
+  temperature: 1.0
+  eeg_temporal_kernel: 65
+  env_conv1_kernel: 15
+  env_conv2_kernel: 65
+  dropout: 0.0
+  use_multiscale: false
+  eeg_ms_kernels: []
+  env_ms_kernels: []
+  causal_temporal: false
+
+window:
+  window_s: 1.0
+  stride_s: 1.0
+
+train:
+  epochs: 50
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  lambda_crf: 0.0
+  lambda_ce: 0.5
+  grad_clip: 1.0
+  batch_size: 32
+  scheduler: cosine
+  warmup_crf_epoch: 50
+
+experiment:
+  p_switch_init: 0.001
+  learn_p_switch: false
+  device: cuda:0
+  seed: 42
+  subject: null
+  trial: null
+  max_trials_per_subject: 8

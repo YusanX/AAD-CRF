@@ -1,0 +1,7 @@
+./output
+./outputs   
+./figures
+./outputs1
+./docs
+__pycache__/
+*.py[cod]
