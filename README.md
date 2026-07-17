@@ -1,6 +1,6 @@
 # AAD-CRF
 
-Code for **End-to-End Markov-Structured Sequence Learning for Auditory Attention Decoding**.
+Code for **End-to-End Markov State Sequence Learning for Auditory Attention Decoding**.
 
 The project trains auditory attention decoding (AAD) backbones as neural emissions of a two-state conditional random field (CRF). It contains experiments for AVGC, KUL, and USTC with ESCNet, AADNet, LSTM, and the attn-GRU model variants.
 
